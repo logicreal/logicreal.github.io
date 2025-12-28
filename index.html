@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>logic site thing</title>
+<title>logic</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -26,13 +26,8 @@ body::before{
   content:'';
   position:fixed;
   inset:0;
-  background: radial-gradient(circle at 50% 50%, rgba(138,92,255,0.15), transparent 60%), repeating-linear-gradient(45deg, rgba(138,92,255,0.05) 0, rgba(138,92,255,0.05) 3px, transparent 3px, transparent 20px);
-  animation: moveWave 20s linear infinite;
+  background: radial-gradient(circle at 50% 50%, rgba(138,92,255,0.15) 0%, transparent 70%), repeating-linear-gradient(45deg, rgba(138,92,255,0.03) 0, rgba(138,92,255,0.03) 3px, transparent 3px, transparent 20px);
   z-index:0;
-}
-@keyframes moveWave{
-  0%{background-position:0 0,0 0;}
-  100%{background-position:500px 0,1000px 0;}
 }
 header{
   padding:80px 20px 40px;
@@ -81,6 +76,11 @@ main{
   border-radius:20px;
   padding:28px;
   box-shadow:0 20px 40px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover{
+  transform: translateY(-6px);
+  box-shadow:0 25px 50px rgba(0,0,0,0.6);
 }
 .card h2{font-size:1.6rem;margin-bottom:12px;color:var(--accent);}
 .card ul{list-style:none;padding-left:0;margin:0;}
@@ -90,26 +90,31 @@ main{
 .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;}
 .links a{text-decoration:none;color:var(--text);border:1px solid rgba(255,255,255,0.1);padding:10px 16px;border-radius:999px;font-size:0.95rem;transition:all 0.25s ease;}
 .links a:hover{background:var(--accent);color:#000;transform:translateY(-2px);}
+.video, .repo{margin-bottom:16px;padding:12px;border-radius:12px;background:rgba(138,92,255,0.05);transition:background 0.3s ease;}
+.video:hover, .repo:hover{background:rgba(138,92,255,0.12);}
+.video a, .repo a{color:var(--accent);text-decoration:none;font-weight:600;}
+.video a:hover, .repo a:hover{text-decoration:underline;}
+.video img{width:100%;border-radius:8px;margin-bottom:8px;}
 footer{text-align:center;color:var(--muted);font-size:0.85rem;padding-bottom:40px;opacity:0.6;position:relative;z-index:1;}
 </style>
 </head>
 <body>
 <header>
 <h1 class="glow-text"> <span>l</span><span>o</span><span>g</span><span>i</span><span>c</span><span class="dot">.</span></h1>
-<p>video editor • mid dev • retard</p>
+<p>video editor • mid dev • retard/p>
 </header>
 <main>
 <section class="card">
 <h2>About</h2>
-<p>I work on video editing, electronics projects, and coding experiments. I enjoy making creative content and fun side projects to improve my skills.</p>
+<p>I edit videos sometimes, i try to code shit and yeah stuff like that idk</p>
 </section>
 <section class="card">
-<h2>Projects</h2>
-<ul>
-<li>ESP32 fuckery</li>
-<li>This website</li>
-<li>Video editing projects</li>
-</ul>
+<h2>Latest YouTube Videos</h2>
+<div id="youtube-videos">Loading...</div>
+</section>
+<section class="card">
+<h2>Newest GitHub Repositories</h2>
+<div id="github-repos">Loading...</div>
 </section>
 <section class="card">
 <h2>Links</h2>
@@ -121,5 +126,45 @@ footer{text-align:center;color:var(--muted);font-size:0.85rem;padding-bottom:40p
 </section>
 </main>
 <footer>© 2025 logic — hosted on GitHub Pages</footer>
+<script>
+async function loadYouTube(){
+  const CORS_PROXY = 'https://api.allorigins.win/get?url=';
+  const channelId = 'UC2ts6iSHXTz5tiOvdSwvxbA';
+  const rssUrl = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`);
+  const res = await fetch(`${CORS_PROXY}${rssUrl}`);
+  const text = await res.text();
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(JSON.parse(res.text()).contents || text, 'text/xml');
+  const entries = xml.querySelectorAll('entry');
+  const container = document.getElementById('youtube-videos');
+  container.innerHTML = '';
+  for(let i=0;i<Math.min(3,entries.length);i++){
+    const entry = entries[i];
+    const title = entry.querySelector('title').textContent;
+    const link = entry.querySelector('link').getAttribute('href');
+    const date = new Date(entry.querySelector('published').textContent).toLocaleDateString();
+    const div = document.createElement('div');
+    div.className='video';
+    div.innerHTML=`<a href='${link}' target='_blank'>${title}</a><br><small>${date}</small>`;
+    container.appendChild(div);
+  }
+}
+
+async function loadGitHub(){
+  const res = await fetch('https://api.github.com/users/logicreal/repos?sort=updated&per_page=3');
+  const data = await res.json();
+  const container = document.getElementById('github-repos');
+  container.innerHTML = '';
+  for(let repo of data){
+    const div = document.createElement('div');
+    div.className='repo';
+    div.innerHTML=`<a href='${repo.html_url}' target='_blank'>${repo.name}</a><br><small>${repo.description || ''}</small>`;
+    container.appendChild(div);
+  }
+}
+
+loadYouTube();
+loadGitHub();
+</script>
 </body>
 </html>
