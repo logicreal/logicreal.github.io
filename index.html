@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>logic</title>
+<title>logic — ME Site</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -83,9 +83,6 @@ main{
   box-shadow:0 25px 50px rgba(0,0,0,0.6);
 }
 .card h2{font-size:1.6rem;margin-bottom:12px;color:var(--accent);}
-.card ul{list-style:none;padding-left:0;margin:0;}
-.card ul li{position:relative;padding-left:18px;margin-bottom:10px;}
-.card ul li::before{content:'•';position:absolute;left:0;color:var(--accent);}
 .card p{color:var(--muted);line-height:1.6;}
 .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;}
 .links a{text-decoration:none;color:var(--text);border:1px solid rgba(255,255,255,0.1);padding:10px 16px;border-radius:999px;font-size:0.95rem;transition:all 0.25s ease;}
@@ -94,19 +91,18 @@ main{
 .video:hover, .repo:hover{background:rgba(138,92,255,0.12);}
 .video a, .repo a{color:var(--accent);text-decoration:none;font-weight:600;}
 .video a:hover, .repo a:hover{text-decoration:underline;}
-.video img{width:100%;border-radius:8px;margin-bottom:8px;}
 footer{text-align:center;color:var(--muted);font-size:0.85rem;padding-bottom:40px;opacity:0.6;position:relative;z-index:1;}
 </style>
 </head>
 <body>
 <header>
 <h1 class="glow-text"> <span>l</span><span>o</span><span>g</span><span>i</span><span>c</span><span class="dot">.</span></h1>
-<p>video editor • mid dev • retard/p>
+<p>video editor • mid dev • retard • esp32 tinkerer</p>
 </header>
 <main>
 <section class="card">
 <h2>About</h2>
-<p>I edit videos sometimes, i try to code shit and yeah stuff like that idk</p>
+<p>I work on video editing, electronics projects, and coding experiments. I enjoy making creative content and fun side projects to improve my skills.</p>
 </section>
 <section class="card">
 <h2>Latest YouTube Videos</h2>
@@ -128,25 +124,21 @@ footer{text-align:center;color:var(--muted);font-size:0.85rem;padding-bottom:40p
 <footer>© 2025 logic — hosted on GitHub Pages</footer>
 <script>
 async function loadYouTube(){
-  const CORS_PROXY = 'https://api.allorigins.win/get?url=';
-  const channelId = 'UC2ts6iSHXTz5tiOvdSwvxbA';
-  const rssUrl = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`);
-  const res = await fetch(`${CORS_PROXY}${rssUrl}`);
-  const text = await res.text();
-  const parser = new DOMParser();
-  const xml = parser.parseFromString(JSON.parse(res.text()).contents || text, 'text/xml');
-  const entries = xml.querySelectorAll('entry');
   const container = document.getElementById('youtube-videos');
-  container.innerHTML = '';
-  for(let i=0;i<Math.min(3,entries.length);i++){
-    const entry = entries[i];
-    const title = entry.querySelector('title').textContent;
-    const link = entry.querySelector('link').getAttribute('href');
-    const date = new Date(entry.querySelector('published').textContent).toLocaleDateString();
-    const div = document.createElement('div');
-    div.className='video';
-    div.innerHTML=`<a href='${link}' target='_blank'>${title}</a><br><small>${date}</small>`;
-    container.appendChild(div);
+  try{
+    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=UC2ts6iSHXTz5tiOvdSwvxbA')}`);
+    const data = await res.json();
+    container.innerHTML = '';
+    for(let i=0;i<Math.min(3,data.items.length);i++){
+      const video = data.items[i];
+      const div = document.createElement('div');
+      div.className='video';
+      div.innerHTML=`<a href='${video.link}' target='_blank'>${video.title}</a><br><small>${new Date(video.pubDate).toLocaleDateString()}</small>`;
+      container.appendChild(div);
+    }
+  } catch(e){
+    container.innerHTML='Failed to load videos.';
+    console.error(e);
   }
 }
 
