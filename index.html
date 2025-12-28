@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>logic — ME Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #000;
+  --card: #0d0d0f;
+  --text: #e0e0e0;
+  --muted: #8a8a9c;
+  --accent: #8a5cff;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:#000;
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background: radial-gradient(circle at 50% 50%, rgba(138,92,255,0.15), transparent 60%), repeating-linear-gradient(45deg, rgba(138,92,255,0.05) 0, rgba(138,92,255,0.05) 3px, transparent 3px, transparent 20px);
+  animation: moveWave 20s linear infinite;
+  z-index:0;
+}
+@keyframes moveWave{
+  0%{background-position:0 0,0 0;}
+  100%{background-position:500px 0,1000px 0;}
+}
+header{
+  padding:80px 20px 40px;
+  text-align:center;
+  position:relative;
+  z-index:1;
+}
+header h1{
+  font-size:clamp(2.5rem,6vw,4rem);
+  font-weight:800;
+  letter-spacing:-0.03em;
+  color:#fff;
+  display:inline-block;
+}
+header h1 span.dot{color:var(--accent);}
+.glow-text span{
+  display:inline-block;
+  text-shadow:0 0 2px #fff,0 0 4px #fff;
+  animation: glowWaveText 3s infinite;
+}
+.glow-text span:nth-child(2){animation-delay:0.1s;}
+.glow-text span:nth-child(3){animation-delay:0.2s;}
+.glow-text span:nth-child(4){animation-delay:0.3s;}
+.glow-text span:nth-child(5){animation-delay:0.4s;}
+.glow-text span:nth-child(6){animation-delay:0.5s;}
+@keyframes glowWaveText{
+  0%,100%{text-shadow:0 0 2px #fff,0 0 4px #fff;}
+  50%{text-shadow:0 0 6px #fff,0 0 12px #fff;}
+}
+header p{
+  margin-top:16px;
+  color:var(--muted);
+  font-size:1.1rem;
+}
+main{
+  max-width:1000px;
+  margin:0 auto;
+  padding:40px 20px 80px;
+  display:grid;
+  gap:24px;
+  position:relative;
+  z-index:1;
+}
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)) , var(--card);
+  border-radius:20px;
+  padding:28px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+.card h2{font-size:1.6rem;margin-bottom:12px;color:var(--accent);}
+.card ul{list-style:none;padding-left:0;margin:0;}
+.card ul li{position:relative;padding-left:18px;margin-bottom:10px;}
+.card ul li::before{content:'•';position:absolute;left:0;color:var(--accent);}
+.card p{color:var(--muted);line-height:1.6;}
+.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;}
+.links a{text-decoration:none;color:var(--text);border:1px solid rgba(255,255,255,0.1);padding:10px 16px;border-radius:999px;font-size:0.95rem;transition:all 0.25s ease;}
+.links a:hover{background:var(--accent);color:#000;transform:translateY(-2px);}
+footer{text-align:center;color:var(--muted);font-size:0.85rem;padding-bottom:40px;opacity:0.6;position:relative;z-index:1;}
+.post{display:flex;gap:12px;margin-bottom:20px;}
+.post img{width:48px;height:48px;border-radius:50%;object-fit:cover;}
+.post-content{flex:1;}
+.post-header{display:flex;justify-content:space-between;align-items:center;}
+.post-header .timestamp{color:var(--muted);font-size:0.8rem;}
+.post-body{margin-top:6px;}
+.post-body .likes{color:var(--accent);cursor:pointer;font-size:0.9rem;}
+.post-comment{margin-top:8px;color:var(--muted);font-size:0.85rem;border-left:2px solid rgba(138,92,255,0.5);padding-left:8px;}
+.admin-panel{margin-top:12px;display:flex;flex-direction:column;gap:8px;}
+.admin-panel textarea{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:var(--card);color:#fff;resize:none;}
+.admin-panel input[type=file]{color:#fff;}
+.admin-panel button{align-self:flex-end;padding:6px 12px;background:var(--accent);color:#000;border:none;border-radius:8px;cursor:pointer;}
+.post img.uploaded{max-width:100%;border-radius:12px;margin-top:6px;}
+.edit-delete{margin-top:6px;display:flex;gap:6px;}
+.edit-delete button{padding:4px 8px;font-size:0.8rem;}
+</style>
+</head>
+<body>
+<header>
+<h1 class="glow-text"> <span>l</span><span>o</span><span>g</span><span>i</span><span>c</span><span class="dot">.</span></h1>
+<p>video editor • mid dev • retard • esp32 tinkerer</p>
+</header>
+<main>
+<section class="card">
+<h2>About</h2>
+<p>I work on video editing, electronics projects, and coding experiments. I enjoy making creative content and fun side projects to improve my skills.</p>
+</section>
+<section class="card">
+<h2>Projects</h2>
+<ul>
+<li>ESP32 fuckery</li>
+<li>This website</li>
+<li>Video editing projects</li>
+</ul>
+</section>
+<section class="card">
+<h2>Feed</h2>
+<div id="feed"></div>
+<div id="adminUI" class="admin-panel" style="display:none;">
+<textarea id="newPost" placeholder="Write a new post..."></textarea>
+<input type="file" id="postImage" accept="image/*">
+<img id="previewImg" src="" style="display:none; max-width:200px; border-radius:12px; margin-top:6px;">
+<button onclick="createPost()">Post</button>
+</div>
+<button id="loginBtn">Login with GitHub</button>
+</section>
+<section class="card">
+<h2>Links</h2>
+<div class="links">
+<a href="https://github.com/logicreal" target="_blank">GitHub</a>
+<a href="https://www.youtube.com/@logicreal" target="_blank">YouTube</a>
+<a href="#">Discord: @logicreal</a>
+</div>
+</section>
+</main>
+<footer>© 2025 logic — hosted on GitHub Pages</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+const SUPABASE_URL = 'https://zcvmqefnkwqkylcymzja.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_GvahRbRrxW2qWX-yubcbxA_z6sfVf3v';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const feedEl = document.getElementById('feed');
+const adminUI = document.getElementById('adminUI');
+const loginBtn = document.getElementById('loginBtn');
+const githubAvatarUrl = 'https://github.com/logicreal.png';
+let currentUser = null;
+
+// Image preview
+const postImageInput = document.getElementById('postImage');
+const previewImg = document.getElementById('previewImg');
+postImageInput.addEventListener('change', () => {
+  const file = postImageInput.files[0];
+  if(file && file.size <= 20*1024*1024){
+    previewImg.src = URL.createObjectURL(file);
+    previewImg.style.display = 'block';
+  } else { alert('Max image size 20MB'); postImageInput.value=''; previewImg.style.display='none'; }
+});
+
+// GitHub OAuth login
+loginBtn.onclick = async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'github' });
+}
+
+// Check session
+supabase.auth.onAuthStateChange((event, session) => {
+  if(session && session.user){
+    if(session.user.user_metadata.login === 'logicreal'){
+      currentUser = session.user;
+      adminUI.style.display='flex';
+      loginBtn.style.display='none';
+    } else {
+      alert('Only ME can post');
+      supabase.auth.signOut();
+    }
+  }
+});
+
+async function loadPosts(){
+  let { data: posts } = await supabase.from('posts').select('*').order('timestamp',{ascending:false}).limit(5);
+  feedEl.innerHTML='';
+  for(let post of posts){
+    let { data: comments } = await supabase.from('comments').select('*').eq('post_id', post.id).order('timestamp',{ascending:false}).limit(1);
+    const postEl = document.createElement('div');
+    postEl.classList.add('post');
+    let imageHTML = post.image_url ? `<img src="${post.image_url}" class='uploaded'>` : '';
+    let editedText = post.edited ? ' (edited)' : '';
+    let adminButtons = '';
+    if(currentUser){
+      adminButtons = `<div class='edit-delete'>
+<button onclick='editPost(${post.id})'>Edit</button>
+<button onclick='deletePost(${post.id})'>Delete</button>
+</div>`;
+    }
+    postEl.innerHTML = `
+      <img src="${githubAvatarUrl}" alt="profile">
+      <div class="post-content">
+        <div class="post-header">
+          <span>ME${editedText}</span>
+          <span class="timestamp">${new Date(post.timestamp).toLocaleString()}</span>
+        </div>
+        <div class="post-body">
+          <div>${post.content}</div>
+          ${imageHTML}
+          <div class="likes" onclick="likePost(${post.id}, this)">❤️ ${post.likes || 0}</div>
+        </div>
+        ${comments && comments.length>0 ? `<div class="post-comment">${comments[0].content}</div>` : ''}
+        ${adminButtons}
+      </div>
+    `;
+    feedEl.appendChild(postEl);
+  }
+}
+
+async function likePost(id, el){
+  await supabase.from('posts').update({ likes: supabase.raw('likes + 1') }).eq('id', id);
+  loadPosts();
+}
+
+async function createPost(){
+  const content = document.getElementById('newPost').value;
+  if(!content && !postImageInput.files[0]) return;
+  let imageUrl = null;
+  if(postImageInput.files[0]){
+    const file = postImageInput.files[0];
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+    const { data, error } = await supabase.storage.from('post-images').upload(fileName, file);
+    if(error){ alert(error.message); return; }
+    const { data: publicURL } = supabase.storage.from('post-images').getPublicUrl(fileName);
+    imageUrl = publicURL.publicUrl;
+  }
+  await supabase.from('posts').insert([{author:'ME',content,timestamp:new Date(),likes:0,image_url:imageUrl,edited:false}]);
+  document.getElementById('newPost').value='';
+  postImageInput.value='';
+  previewImg.style.display='none';
+  loadPosts();
+}
+
+async function editPost(id){
+  const newText = prompt('Edit your post:');
+  if(newText!==null){
+    await supabase.from('posts').update({content:newText,edited:true}).eq('id',id);
+    loadPosts();
+  }
+}
+
+async function deletePost(id){
+  if(confirm('Are you sure you want to delete this post?')){
+    await supabase.from('posts').delete().eq('id',id);
+    loadPosts();
+  }
+}
+
+loadPosts();
+</script>
+</body>
+</html>
