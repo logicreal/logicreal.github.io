@@ -20,15 +20,15 @@ p{color:#aaa;line-height:1.5;}
 .links a{padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.15);color:#fff;text-decoration:none;transition:.25s;}
 .links a:hover{background:#8a5cff;color:#000;}
 /* YouTube sidebar style */
-#youtube-videos{display:flex;flex-direction:column;gap:16px;}
-.video-row{display:flex;gap:14px;align-items:center;text-decoration:none;position:relative;}
-.thumb-wrap{position:relative;}
-.video-row img{width:120px;height:68px;object-fit:cover;border-radius:6px;box-shadow:0 0 10px rgba(138,92,255,0.15);transition:.25s;}
+#youtube-videos{display:flex;flex-direction:column;gap:14px;}
+.video-row{display:flex;align-items:flex-start;gap:12px;text-decoration:none;position:relative;}
+.thumb-wrap{position:relative;flex-shrink:0;}
+.video-row img{width:160px;height:90px;object-fit:cover;border-radius:6px;box-shadow:0 0 10px rgba(138,92,255,0.15);transition:transform 0.25s ease, box-shadow 0.25s ease;}
 .video-row:hover img{transform:scale(1.05);box-shadow:0 0 18px rgba(138,92,255,0.4);}
 .duration{position:absolute;bottom:4px;right:6px;background:rgba(0,0,0,0.8);padding:2px 6px;font-size:0.7rem;border-radius:4px;}
 .new{position:absolute;top:4px;left:6px;background:#8a5cff;color:#000;font-size:0.65rem;padding:2px 6px;border-radius:4px;}
-.video-meta{display:flex;flex-direction:column;}
-.video-title{font-size:0.95rem;line-height:1.2;color:#fff;}
+.video-meta{display:flex;flex-direction:column;justify-content:center;}
+.video-title{font-size:0.95rem;line-height:1.2;color:#fff;font-weight:500;}
 .video-date{font-size:0.75rem;color:#888;margin-top:4px;}
 /* GitHub */
 #github-repos{display:flex;flex-direction:column;gap:12px;}
@@ -47,7 +47,7 @@ p{color:#aaa;line-height:1.5;}
 <div class="bg-glow"></div>
 <div class="container">
   <h1>logic<span class="dot">.</span></h1>
-  <p>video editor • mid dev • retard • esp32 tinkerer</p>
+  <p>video editor • mid dev • retard</p>
 
   <section>
     <h2>About</h2>
