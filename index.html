@@ -5,49 +5,54 @@
 <title>logic.</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif;}
-body{background:#050505;color:#fff;min-height:100vh;overflow-x:hidden;position:relative;}
-.bg-glow{position:fixed;top:50%;left:50%;width:600px;height:600px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(138,92,255,.18),transparent 70%);pointer-events:none;z-index:0;}
-.container{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:80px 24px;}
-h1{font-size:3rem;font-weight:700;margin-bottom:20px;letter-spacing:-1px;text-shadow:0 0 6px rgba(255,255,255,0.15);animation:glowWave 4s infinite linear;}
-h1 span.dot{color:#8a5cff;}
-@keyframes glowWave{0%,100%{text-shadow:0 0 4px rgba(255,255,255,0.12);}50%{text-shadow:0 0 10px rgba(255,255,255,0.35);}}
-header p{margin-bottom:40px;color:#888;font-size:1.1rem;}
-section{margin-bottom:60px;}
-h2{font-size:1.4rem;margin-bottom:20px;color:#ddd;}
-p{color:#aaa;line-height:1.5;}
-.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;}
-.links a{padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.15);color:#fff;text-decoration:none;transition:.25s;}
-.links a:hover{background:#8a5cff;color:#000;}
+* {box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif;}
+body {background:#050505;color:#fff;min-height:100vh;overflow-x:hidden;position:relative;}
+.bg-glow {position:fixed;top:50%;left:50%;width:600px;height:600px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(138,92,255,.18),transparent 70%);pointer-events:none;z-index:0;}
+.container {position:relative;z-index:1;max-width:900px;margin:0 auto;padding:80px 24px;}
+h1 {font-size:3rem;font-weight:700;margin-bottom:20px;letter-spacing:-1px;text-shadow:0 0 6px rgba(255,255,255,0.15);animation:glowWave 4s infinite linear;}
+h1 span.dot {color:#8a5cff;}
+@keyframes glowWave {0%,100%{text-shadow:0 0 4px rgba(255,255,255,0.12);}50%{text-shadow:0 0 10px rgba(255,255,255,0.35);}}
+p {color:#aaa;line-height:1.5;margin-bottom:20px;}
+section {margin-bottom:60px;}
+h2 {font-size:1.4rem;margin-bottom:20px;color:#ddd;}
+.links {display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;}
+.links a {padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.15);color:#fff;text-decoration:none;transition:.25s;}
+.links a:hover {background:#8a5cff;color:#000;}
+
 /* YouTube sidebar style */
-#youtube-videos{display:flex;flex-direction:column;gap:14px;}
-.video-row{display:flex;align-items:flex-start;gap:12px;text-decoration:none;position:relative;}
-.thumb-wrap{position:relative;flex-shrink:0;}
-.video-row img{width:160px;height:90px;object-fit:cover;border-radius:6px;box-shadow:0 0 10px rgba(138,92,255,0.15);transition:transform 0.25s ease, box-shadow 0.25s ease;}
-.video-row:hover img{transform:scale(1.05);box-shadow:0 0 18px rgba(138,92,255,0.4);}
-.duration{position:absolute;bottom:4px;right:6px;background:rgba(0,0,0,0.8);padding:2px 6px;font-size:0.7rem;border-radius:4px;}
-.new{position:absolute;top:4px;left:6px;background:#8a5cff;color:#000;font-size:0.65rem;padding:2px 6px;border-radius:4px;}
-.video-meta{display:flex;flex-direction:column;justify-content:center;}
-.video-title{font-size:0.95rem;line-height:1.2;color:#fff;font-weight:500;}
-.video-date{font-size:0.75rem;color:#888;margin-top:4px;}
+#youtube-videos {display:flex;flex-direction:column;gap:14px;}
+.video-row {display:flex;align-items:flex-start;gap:12px;text-decoration:none;position:relative;background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:6px;transition:background .2s;}
+.video-row:hover {background:rgba(138,92,255,0.1);}
+.thumb-wrap {position:relative;flex-shrink:0;}
+.video-row img {width:120px;height:68px;object-fit:cover;border-radius:6px;box-shadow:0 0 10px rgba(138,92,255,0.15);transition:transform 0.25s ease,box-shadow 0.25s ease;}
+.video-row:hover img {transform:scale(1.05);box-shadow:0 0 18px rgba(138,92,255,0.4);}
+.duration {position:absolute;bottom:4px;right:6px;background:rgba(0,0,0,0.8);padding:2px 6px;font-size:0.7rem;border-radius:4px;}
+.new {position:absolute;top:4px;left:6px;background:#8a5cff;color:#000;font-size:0.65rem;padding:2px 6px;border-radius:4px;}
+.video-meta {display:flex;flex-direction:column;justify-content:center;}
+.video-title {font-size:0.95rem;line-height:1.2;color:#fff;font-weight:500;}
+.video-date {font-size:0.75rem;color:#888;margin-top:4px;}
+
 /* GitHub */
-#github-repos{display:flex;flex-direction:column;gap:12px;}
-.repo a{color:#fff;text-decoration:none;}
-.repo small{color:#888;}
-/* Hidden snake */
-#snake-trigger{position:fixed;bottom:18px;right:20px;width:12px;height:12px;border-radius:50%;background:rgba(138,92,255,0.2);cursor:pointer;z-index:10;}
-#snake-trigger:hover{background:rgba(138,92,255,0.6);}
-#snake-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.95);display:none;align-items:center;justify-content:center;z-index:999;}
-#snake-overlay.active{display:flex;}
-#snake{background:#050505;border:2px solid #8a5cff;}
-.snake-hint{position:absolute;bottom:20px;color:#666;font-size:0.8rem;}
+#github-repos {display:flex;flex-direction:column;gap:12px;}
+.repo {padding:6px 8px;border-radius:6px;background:rgba(255,255,255,0.03);transition:background .2s;}
+.repo:hover {background:rgba(138,92,255,0.1);}
+.repo a {color:#fff;text-decoration:none;font-weight:500;}
+.repo small {color:#888;}
+
+/* Snake */
+#snake-trigger {position:fixed;bottom:18px;right:20px;width:12px;height:12px;border-radius:50%;background:rgba(138,92,255,0.2);cursor:pointer;z-index:10;}
+#snake-trigger:hover {background:rgba(138,92,255,0.6);}
+#snake-overlay {position:fixed;inset:0;background:rgba(0,0,0,0.95);display:none;align-items:center;justify-content:center;z-index:999;}
+#snake-overlay.active {display:flex;}
+#snake {background:#050505;border:2px solid #8a5cff;}
+.snake-hint {position:absolute;bottom:20px;color:#666;font-size:0.8rem;}
 </style>
 </head>
 <body>
 <div class="bg-glow"></div>
 <div class="container">
   <h1>logic<span class="dot">.</span></h1>
-  <p>video editor • mid dev • retard</p>
+  <p>video editor • mid dev • retard • esp32 tinkerer</p>
 
   <section>
     <h2>About</h2>
@@ -133,7 +138,6 @@ const overlay=document.getElementById('snake-overlay');
 const canvas=document.getElementById('snake');
 const ctx=canvas.getContext('2d');
 let snake,dir,food,interval;
-
 function startSnake(){snake=[{x:10,y:10}];dir={x:1,y:0};food={x:15,y:15};interval=setInterval(tick,100);}
 function tick(){const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};if(h.x<0||h.y<0||h.x>=20||h.y>=20){clearInterval(interval);return}snake.unshift(h);(h.x===food.x&&h.y===food.y)?food={x:Math.random()*20|0,y:Math.random()*20|0}:snake.pop();ctx.fillStyle='#050505';ctx.fillRect(0,0,400,400);ctx.fillStyle='#8a5cff';snake.forEach(s=>ctx.fillRect(s.x*20,s.y*20,18,18));ctx.fillStyle='#fff';ctx.fillRect(food.x*20,food.y*20,18,18);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){overlay.classList.remove('active');clearInterval(interval);}if(e.key==='ArrowUp')dir={x:0,y:-1};if(e.key==='ArrowDown')dir={x:0,y:1};if(e.key==='ArrowLeft')dir={x:-1,y:0};if(e.key==='ArrowRight')dir={x:1,y:0}});
