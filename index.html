@@ -6,14 +6,14 @@
 <title>logic — ME Site</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #000;
-  --card: #0d0d0f;
-  --text: #e0e0e0;
-  --muted: #8a8a9c;
-  --accent: #8a5cff;
+:root{
+  --bg:#000;
+  --card:#0d0d0f;
+  --text:#e0e0e0;
+  --muted:#8a8a9c;
+  --accent:#8a5cff;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
+*{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:'Inter',system-ui,sans-serif;
   background:#000;
@@ -26,7 +26,9 @@ body::before{
   content:'';
   position:fixed;
   inset:0;
-  background: radial-gradient(circle at 50% 50%, rgba(138,92,255,0.15) 0%, transparent 70%), repeating-linear-gradient(45deg, rgba(138,92,255,0.03) 0, rgba(138,92,255,0.03) 3px, transparent 3px, transparent 20px);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(138,92,255,.18), transparent 70%),
+    repeating-linear-gradient(45deg, rgba(138,92,255,.03) 0, rgba(138,92,255,.03) 3px, transparent 3px, transparent 20px);
   z-index:0;
 }
 header{
@@ -38,33 +40,24 @@ header{
 header h1{
   font-size:clamp(2.5rem,6vw,4rem);
   font-weight:800;
-  letter-spacing:-0.03em;
+  letter-spacing:-.03em;
   color:#fff;
-  display:inline-block;
 }
-header h1 span.dot{color:var(--accent);}
-.glow-text span{
+header h1 .dot{color:var(--accent)}
+.glow span{
   display:inline-block;
   text-shadow:0 0 2px #fff,0 0 4px #fff;
-  animation: glowWaveText 3s infinite;
+  animation:glowWave 3s infinite;
 }
-.glow-text span:nth-child(2){animation-delay:0.1s;}
-.glow-text span:nth-child(3){animation-delay:0.2s;}
-.glow-text span:nth-child(4){animation-delay:0.3s;}
-.glow-text span:nth-child(5){animation-delay:0.4s;}
-.glow-text span:nth-child(6){animation-delay:0.5s;}
-@keyframes glowWaveText{
-  0%,100%{text-shadow:0 0 2px #fff,0 0 4px #fff;}
-  50%{text-shadow:0 0 6px #fff,0 0 12px #fff;}
+.glow span:nth-child(n){animation-delay:calc(var(--i)*.12s)}
+@keyframes glowWave{
+  0%,100%{text-shadow:0 0 2px #fff,0 0 4px #fff}
+  50%{text-shadow:0 0 7px #fff,0 0 14px #fff}
 }
-header p{
-  margin-top:16px;
-  color:var(--muted);
-  font-size:1.1rem;
-}
+header p{margin-top:14px;color:var(--muted)}
 main{
   max-width:1000px;
-  margin:0 auto;
+  margin:auto;
   padding:40px 20px 80px;
   display:grid;
   gap:24px;
@@ -72,91 +65,102 @@ main{
   z-index:1;
 }
 .card{
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)) , var(--card);
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0)),var(--card);
   border-radius:20px;
   padding:28px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.5);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
+  transition:.3s ease;
 }
-.card:hover{
-  transform: translateY(-6px);
-  box-shadow:0 25px 50px rgba(0,0,0,0.6);
+.card:hover{transform:translateY(-6px)}
+.card h2{color:var(--accent);margin-bottom:12px}
+.video,.repo{
+  background:rgba(138,92,255,.07);
+  padding:14px;
+  border-radius:14px;
+  margin-bottom:14px;
+  transition:.25s ease;
 }
-.card h2{font-size:1.6rem;margin-bottom:12px;color:var(--accent);}
-.card p{color:var(--muted);line-height:1.6;}
-.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;}
-.links a{text-decoration:none;color:var(--text);border:1px solid rgba(255,255,255,0.1);padding:10px 16px;border-radius:999px;font-size:0.95rem;transition:all 0.25s ease;}
-.links a:hover{background:var(--accent);color:#000;transform:translateY(-2px);}
-.video, .repo{margin-bottom:16px;padding:12px;border-radius:12px;background:rgba(138,92,255,0.05);transition:background 0.3s ease;}
-.video:hover, .repo:hover{background:rgba(138,92,255,0.12);}
-.video a, .repo a{color:var(--accent);text-decoration:none;font-weight:600;}
-.video a:hover, .repo a:hover{text-decoration:underline;}
-footer{text-align:center;color:var(--muted);font-size:0.85rem;padding-bottom:40px;opacity:0.6;position:relative;z-index:1;}
+.video:hover,.repo:hover{background:rgba(138,92,255,.14)}
+.video img{width:100%;border-radius:10px;margin-bottom:8px}
+.video a,.repo a{color:#fff;font-weight:600;text-decoration:none}
+small{color:var(--muted)}
+.links{display:flex;gap:12px;flex-wrap:wrap}
+.links a{
+  padding:10px 16px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.15);
+  color:#fff;
+  text-decoration:none;
+  transition:.25s
+}
+.links a:hover{background:var(--accent);color:#000}
+footer{opacity:.5;text-align:center;padding-bottom:40px}
+#snake-trigger{
+  position:fixed;
+  bottom:18px;
+  right:20px;
+  width:14px;height:14px;
+  border-radius:50%;
+  background:rgba(138,92,255,.2);
+  cursor:pointer;
+  z-index:5;
+}
+#snake-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.95);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+#snake-overlay.active{display:flex}
+#snake{background:#050505;border:2px solid var(--accent)}
+.snake-hint{position:absolute;bottom:20px;color:#666}
 </style>
 </head>
 <body>
 <header>
-<h1 class="glow-text"> <span>l</span><span>o</span><span>g</span><span>i</span><span>c</span><span class="dot">.</span></h1>
+<h1 class="glow">
+<span style="--i:0">l</span><span style="--i:1">o</span><span style="--i:2">g</span><span style="--i:3">i</span><span style="--i:4">c</span><span class="dot">.</span>
+</h1>
 <p>video editor • mid dev • retard • esp32 tinkerer</p>
 </header>
 <main>
-<section class="card">
-<h2>About</h2>
-<p>I work on video editing, electronics projects, and coding experiments. I enjoy making creative content and fun side projects to improve my skills.</p>
-</section>
-<section class="card">
-<h2>Latest YouTube Videos</h2>
-<div id="youtube-videos">Loading...</div>
-</section>
-<section class="card">
-<h2>Newest GitHub Repositories</h2>
-<div id="github-repos">Loading...</div>
-</section>
-<section class="card">
-<h2>Links</h2>
-<div class="links">
-<a href="https://github.com/logicreal" target="_blank">GitHub</a>
-<a href="https://www.youtube.com/@logicreal" target="_blank">YouTube</a>
-<a href="#">Discord: @logicreal</a>
-</div>
-</section>
+<section class="card"><h2>About</h2><p>I do video editing, electronics fuckery and random dev experiments.</p></section>
+<section class="card"><h2>Latest Videos</h2><div id="yt">Loading…</div></section>
+<section class="card"><h2>Newest GitHub</h2><div id="gh">Loading…</div></section>
+<section class="card"><h2>Links</h2><div class="links"><a href="https://github.com/logicreal">GitHub</a><a href="https://www.youtube.com/@logicreal">YouTube</a><a>Discord: @logicreal</a></div></section>
 </main>
-<footer>© 2025 logic — hosted on GitHub Pages</footer>
+<footer>© 2025 logic</footer>
+<div id="snake-trigger" title="."></div>
+<div id="snake-overlay"><canvas id="snake" width="400" height="400"></canvas><div class="snake-hint">ESC to close</div></div>
 <script>
-async function loadYouTube(){
-  const container = document.getElementById('youtube-videos');
+(async()=>{
+  const yt=document.getElementById('yt');
   try{
-    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=UC2ts6iSHXTz5tiOvdSwvxbA')}`);
-    const data = await res.json();
-    container.innerHTML = '';
-    for(let i=0;i<Math.min(3,data.items.length);i++){
-      const video = data.items[i];
-      const div = document.createElement('div');
-      div.className='video';
-      div.innerHTML=`<a href='${video.link}' target='_blank'>${video.title}</a><br><small>${new Date(video.pubDate).toLocaleDateString()}</small>`;
-      container.appendChild(div);
-    }
-  } catch(e){
-    container.innerHTML='Failed to load videos.';
-    console.error(e);
-  }
-}
-
-async function loadGitHub(){
-  const res = await fetch('https://api.github.com/users/logicreal/repos?sort=updated&per_page=3');
-  const data = await res.json();
-  const container = document.getElementById('github-repos');
-  container.innerHTML = '';
-  for(let repo of data){
-    const div = document.createElement('div');
-    div.className='repo';
-    div.innerHTML=`<a href='${repo.html_url}' target='_blank'>${repo.name}</a><br><small>${repo.description || ''}</small>`;
-    container.appendChild(div);
-  }
-}
-
-loadYouTube();
-loadGitHub();
+    const r=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=UC2ts6iSHXTz5tiOvdSwvxbA'));
+    const d=await r.json();
+    yt.innerHTML='';
+    d.items.slice(0,3).forEach(v=>{
+      yt.innerHTML+=`<div class="video"><a href="${v.link}" target="_blank"><img src="${v.thumbnail}">${v.title}</a><br><small>${new Date(v.pubDate).toLocaleDateString()}</small></div>`;
+    });
+  }catch{yt.innerText='Failed to load videos'}
+  const gh=document.getElementById('gh');
+  const gr=await fetch('https://api.github.com/users/logicreal/repos?sort=updated&per_page=3');
+  const gd=await gr.json();
+  gh.innerHTML='';
+  gd.forEach(r=>gh.innerHTML+=`<div class="repo"><a href="${r.html_url}">${r.name}</a><br><small>${r.description||''}</small></div>`);
+})();
+const trig=document.getElementById('snake-trigger');
+const ov=document.getElementById('snake-overlay');
+const c=document.getElementById('snake');
+const x=c.getContext('2d');
+let s,d,f,i;
+function start(){s=[{x:10,y:10}];d={x:1,y:0};f={x:15,y:15};i=setInterval(t,100)}
+function t(){const h={x:s[0].x+d.x,y:s[0].y+d.y};if(h.x<0||h.y<0||h.x>=20||h.y>=20){clearInterval(i);return}s.unshift(h);(h.x==f.x&&h.y==f.y)?f={x:Math.random()*20|0,y:Math.random()*20|0}:s.pop();x.fillStyle='#050505';x.fillRect(0,0,400,400);x.fillStyle='#8a5cff';s.forEach(p=>x.fillRect(p.x*20,p.y*20,18,18));x.fillStyle='#fff';x.fillRect(f.x*20,f.y*20,18,18)}
+trig.onclick=()=>{ov.classList.add('active');start()}
+document.onkeydown=e=>{if(e.key=='Escape'){ov.classList.remove('active');clearInterval(i)}if(e.key=='ArrowUp')d={x:0,y:-1};if(e.key=='ArrowDown')d={x:0,y:1};if(e.key=='ArrowLeft')d={x:-1,y:0};if(e.key=='ArrowRight')d={x:1,y:0}}
 </script>
 </body>
 </html>
