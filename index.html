@@ -1,150 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>logic.</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>logic</title>
+
 <style>
-* {box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif;}
-body {background:#050505;color:#fff;min-height:100vh;overflow-x:hidden;position:relative;}
-.bg-glow {position:fixed;top:50%;left:50%;width:600px;height:600px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(138,92,255,.18),transparent 70%);pointer-events:none;z-index:0;}
-.container {position:relative;z-index:1;max-width:900px;margin:0 auto;padding:80px 24px;}
-h1 {font-size:3rem;font-weight:700;margin-bottom:20px;letter-spacing:-1px;text-shadow:0 0 6px rgba(255,255,255,0.15);animation:glowWave 4s infinite linear;}
-h1 span.dot {color:#8a5cff;}
-@keyframes glowWave {0%,100%{text-shadow:0 0 4px rgba(255,255,255,0.12);}50%{text-shadow:0 0 10px rgba(255,255,255,0.35);}}
-p {color:#aaa;line-height:1.5;margin-bottom:20px;}
-section {margin-bottom:60px;}
-h2 {font-size:1.4rem;margin-bottom:20px;color:#ddd;}
-.links {display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;}
-.links a {padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.15);color:#fff;text-decoration:none;transition:.25s;}
-.links a:hover {background:#8a5cff;color:#000;}
+:root {
+  --bg: #08060d;
+  --purple: #9b5cff;
+  --purple-soft: rgba(155,92,255,.35);
+  --glass: rgba(255,255,255,.06);
+  --border: rgba(255,255,255,.12);
+  --text: #eae6ff;
+}
 
-/* YouTube sidebar style */
-#youtube-videos {display:flex;flex-direction:column;gap:14px;}
-.video-row {display:flex;align-items:flex-start;gap:12px;text-decoration:none;position:relative;background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:6px;transition:background .2s;}
-.video-row:hover {background:rgba(138,92,255,0.1);}
-.thumb-wrap {position:relative;flex-shrink:0;}
-.video-row img {width:120px;height:68px;object-fit:cover;border-radius:6px;box-shadow:0 0 10px rgba(138,92,255,0.15);transition:transform 0.25s ease,box-shadow 0.25s ease;}
-.video-row:hover img {transform:scale(1.05);box-shadow:0 0 18px rgba(138,92,255,0.4);}
-.duration {position:absolute;bottom:4px;right:6px;background:rgba(0,0,0,0.8);padding:2px 6px;font-size:0.7rem;border-radius:4px;}
-.new {position:absolute;top:4px;left:6px;background:#8a5cff;color:#000;font-size:0.65rem;padding:2px 6px;border-radius:4px;}
-.video-meta {display:flex;flex-direction:column;justify-content:center;}
-.video-title {font-size:0.95rem;line-height:1.2;color:#fff;font-weight:500;}
-.video-date {font-size:0.75rem;color:#888;margin-top:4px;}
+* { box-sizing: border-box; }
 
-/* GitHub */
-#github-repos {display:flex;flex-direction:column;gap:12px;}
-.repo {padding:6px 8px;border-radius:6px;background:rgba(255,255,255,0.03);transition:background .2s;}
-.repo:hover {background:rgba(138,92,255,0.1);}
-.repo a {color:#fff;text-decoration:none;font-weight:500;}
-.repo small {color:#888;}
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
 
-/* Snake */
-#snake-trigger {position:fixed;bottom:18px;right:20px;width:12px;height:12px;border-radius:50%;background:rgba(138,92,255,0.2);cursor:pointer;z-index:10;}
-#snake-trigger:hover {background:rgba(138,92,255,0.6);}
-#snake-overlay {position:fixed;inset:0;background:rgba(0,0,0,0.95);display:none;align-items:center;justify-content:center;z-index:999;}
-#snake-overlay.active {display:flex;}
-#snake {background:#050505;border:2px solid #8a5cff;}
-.snake-hint {position:absolute;bottom:20px;color:#666;font-size:0.8rem;}
+/* ===== Background ===== */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background:
+    linear-gradient(120deg, #05040a, #0b0714, #05040a);
+  animation: bgMove 25s linear infinite;
+}
+@keyframes bgMove {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(20deg); }
+}
+
+.center-glow {
+  position: fixed;
+  width: 700px;
+  height: 700px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(155,92,255,.25), transparent 65%);
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* ===== Layout ===== */
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px 20px;
+}
+
+/* ===== Title ===== */
+h1 {
+  text-align: center;
+  font-size: 3.2rem;
+  margin-bottom: 70px;
+  font-weight: 700;
+  position: relative;
+  text-shadow: 0 0 6px rgba(255,255,255,.25);
+}
+h1 span {
+  color: var(--purple);
+}
+h1::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -15px;
+  width: 160px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--purple), transparent);
+  transform: translateX(-50%);
+  animation: wave 4s infinite ease-in-out;
+}
+@keyframes wave {
+  0% { opacity: .4; }
+  50% { opacity: 1; }
+  100% { opacity: .4; }
+}
+
+/* ===== Sections ===== */
+.section {
+  position: relative;
+  margin-bottom: 60px;
+}
+.section::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(circle, var(--purple-soft), transparent 70%);
+  filter: blur(40px);
+  z-index: -1;
+}
+
+.card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px;
+  backdrop-filter: blur(12px);
+}
+
+.section h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* ===== Links ===== */
+.links a {
+  display: inline-block;
+  margin-right: 15px;
+  color: var(--purple);
+  text-decoration: none;
+}
+.links a:hover { text-decoration: underline; }
+
+/* ===== YouTube ===== */
+.video {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 14px;
+  align-items: center;
+}
+.video img {
+  width: 120px;
+  height: 68px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.video div {
+  font-size: .95rem;
+}
+.video small {
+  opacity: .6;
+}
+
+/* ===== Hidden Snake ===== */
+#snakeBtn {
+  opacity: .08;
+  cursor: pointer;
+  font-size: .8rem;
+  text-align: center;
+  margin-top: 50px;
+}
+#snake {
+  display: none;
+  margin: 20px auto;
+  border: 1px solid var(--border);
+  background: #05040a;
+}
 </style>
 </head>
+
 <body>
-<div class="bg-glow"></div>
-<div class="container">
-  <h1>logic<span class="dot">.</span></h1>
-  <p>video editor • mid dev • retard • esp32 tinkerer</p>
+<div class="bg"></div>
+<div class="center-glow"></div>
 
-  <section>
-    <h2>About</h2>
-    <p>I do video editing, electronics fuckery, and dev experiments. I enjoy creating content, tinkering, and learning new things in fun ways.</p>
-  </section>
+<div class="wrapper">
+  <h1>logic<span>.</span></h1>
 
-  <section>
-    <h2>Latest YouTube Videos</h2>
-    <div id="youtube-videos">Loading…</div>
-  </section>
-
-  <section>
-    <h2>Newest GitHub Repositories</h2>
-    <div id="github-repos">Loading…</div>
-  </section>
-
-  <section>
-    <h2>Links</h2>
-    <div class="links">
-      <a href="https://github.com/logicreal" target="_blank">GitHub</a>
-      <a href="https://www.youtube.com/@logicreal" target="_blank">YouTube</a>
-      <a>Discord: @logicreal</a>
+  <div class="section">
+    <div class="card">
+      <h2>About</h2>
+      <p>
+        Video editor, mid dev, tech enjoyer.  
+        Builds random stuff, edits videos, occasionally does ESP32 fuckery.
+      </p>
     </div>
-  </section>
-</div>
+  </div>
 
-<footer>© 2025 logic</footer>
+  <div class="section">
+    <div class="card links">
+      <h2>Links</h2>
+      <a href="https://github.com/logicreal" target="_blank">GitHub</a>
+      <a href="https://youtube.com/channel/UC2ts6iSHXTz5tiOvdSwvxbA" target="_blank">YouTube</a>
+      <span>Discord: @logicreal</span>
+    </div>
+  </div>
 
-<div id="snake-trigger" title="..."></div>
-<div id="snake-overlay">
+  <div class="section">
+    <div class="card">
+      <h2>Latest YouTube</h2>
+      <div id="yt">Loading…</div>
+    </div>
+  </div>
+
+  <div id="snakeBtn">◦</div>
   <canvas id="snake" width="400" height="400"></canvas>
-  <div class="snake-hint">ESC to close</div>
 </div>
 
 <script>
-/* ---------- YouTube ---------- */
-async function loadYouTube(){
-  const container=document.getElementById('youtube-videos');
-  try{
-    const res=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=UC2ts6iSHXTz5tiOvdSwvxbA'));
-    const data=await res.json();
-    container.innerHTML='';
-    data.items.slice(0,3).forEach(video=>{
-      const pub=new Date(video.pubDate);
-      const isNew=(Date.now()-pub.getTime())<7*24*60*60*1000;
-      const div=document.createElement('a');
-      div.href=video.link;
-      div.target='_blank';
-      div.className='video-row';
-      div.innerHTML=`
-        <div class="thumb-wrap">
-          <img src="${video.thumbnail}">
-          <div class="duration">▶</div>
-          ${isNew?'<div class="new">NEW</div>':''}
-        </div>
-        <div class="video-meta">
-          <div class="video-title">${video.title}</div>
-          <div class="video-date">${pub.toLocaleDateString()}</div>
-        </div>
-      `;
-      container.appendChild(div);
-    });
-  }catch{container.innerText='Failed to load videos';}
+/* ===== YouTube (RSS, no API key) ===== */
+fetch("https://cors.isomorphic-git.org/https://www.youtube.com/feeds/videos.xml?channel_id=UC2ts6iSHXTz5tiOvdSwvxbA")
+.then(r => r.text())
+.then(t => {
+  const xml = new DOMParser().parseFromString(t,"text/xml");
+  const entries = [...xml.querySelectorAll("entry")].slice(0,3);
+  yt.innerHTML = entries.map(e=>{
+    const id = e.querySelector("yt\\:videoId").textContent;
+    return `
+    <div class="video">
+      <img src="https://i.ytimg.com/vi/${id}/mqdefault.jpg">
+      <div>
+        <div>${e.querySelector("title").textContent}</div>
+        <small>${new Date(e.querySelector("published").textContent).toDateString()}</small>
+      </div>
+    </div>`;
+  }).join("");
+});
+
+/* ===== Snake Easter Egg ===== */
+const canvas = document.getElementById("snake");
+const ctx = canvas.getContext("2d");
+const SIZE = 20;
+const COUNT = canvas.width / SIZE;
+
+let snake, dir, food, running = false;
+
+function resetSnake() {
+  snake = [{ x: 10, y: 10 }];
+  dir = { x: 1, y: 0 };
+  food = {
+    x: Math.floor(Math.random() * COUNT),
+    y: Math.floor(Math.random() * COUNT)
+  };
 }
 
-/* ---------- GitHub ---------- */
-async function loadGitHub(){
-  const res=await fetch('https://api.github.com/users/logicreal/repos?sort=updated&per_page=3');
-  const data=await res.json();
-  const container=document.getElementById('github-repos');
-  container.innerHTML='';
-  data.forEach(repo=>{
-    const div=document.createElement('div');
-    div.className='repo';
-    div.innerHTML=`<a href="${repo.html_url}" target="_blank">${repo.name}</a><br><small>${repo.description||''}</small>`;
-    container.appendChild(div);
-  });
+function drawCell(x, y, color, glow=false) {
+  ctx.fillStyle = color;
+  ctx.fillRect(x * SIZE, y * SIZE, SIZE, SIZE);
+  if (glow) {
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 12;
+  }
 }
 
-/* ---------- Snake ---------- */
-const trigger=document.getElementById('snake-trigger');
-const overlay=document.getElementById('snake-overlay');
-const canvas=document.getElementById('snake');
-const ctx=canvas.getContext('2d');
-let snake,dir,food,interval;
-function startSnake(){snake=[{x:10,y:10}];dir={x:1,y:0};food={x:15,y:15};interval=setInterval(tick,100);}
-function tick(){const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};if(h.x<0||h.y<0||h.x>=20||h.y>=20){clearInterval(interval);return}snake.unshift(h);(h.x===food.x&&h.y===food.y)?food={x:Math.random()*20|0,y:Math.random()*20|0}:snake.pop();ctx.fillStyle='#050505';ctx.fillRect(0,0,400,400);ctx.fillStyle='#8a5cff';snake.forEach(s=>ctx.fillRect(s.x*20,s.y*20,18,18));ctx.fillStyle='#fff';ctx.fillRect(food.x*20,food.y*20,18,18);}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){overlay.classList.remove('active');clearInterval(interval);}if(e.key==='ArrowUp')dir={x:0,y:-1};if(e.key==='ArrowDown')dir={x:0,y:1};if(e.key==='ArrowLeft')dir={x:-1,y:0};if(e.key==='ArrowRight')dir={x:1,y:0}});
-trigger.onclick=()=>{overlay.classList.add('active');startSnake();}
+function loop() {
+  if (!running) return;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
-loadYouTube();
-loadGitHub();
+  const head = {
+    x: snake[0].x + dir.x,
+    y: snake[0].y + dir.y
+  };
+
+  if (
+    head.x < 0 || head.y < 0 ||
+    head.x >= COUNT || head.y >= COUNT ||
+    snake.some(s => s.x === head.x && s.y === head.y)
+  ) {
+    running = false;
+    ctx.fillStyle = "#9b5cff";
+    ctx.font = "20px Inter";
+    ctx.fillText("game over", 140, 210);
+    return;
+  }
+
+  snake.unshift(head);
+
+  if (head.x === food.x && head.y === food.y) {
+    food = {
+      x: Math.floor(Math.random() * COUNT),
+      y: Math.floor(Math.random() * COUNT)
+    };
+  } else {
+    snake.pop();
+  }
+
+  drawCell(food.x, food.y, "#9b5cff", true);
+  snake.forEach((s,i)=>
+    drawCell(s.x, s.y, i === 0 ? "#ffffff" : "#cbb3ff", true)
+  );
+
+  ctx.shadowBlur = 0;
+  setTimeout(loop, 110);
+}
+
+document.addEventListener("keydown", e => {
+  if (!running) return;
+  if (e.key === "ArrowUp" && dir.y === 0) dir = {x:0,y:-1};
+  if (e.key === "ArrowDown" && dir.y === 0) dir = {x:0,y:1};
+  if (e.key === "ArrowLeft" && dir.x === 0) dir = {x:-1,y:0};
+  if (e.key === "ArrowRight" && dir.x === 0) dir = {x:1,y:0};
+});
+
+snakeBtn.onclick = () => {
+  canvas.style.display = "block";
+  resetSnake();
+  running = true;
+  loop();
+};
 </script>
 </body>
 </html>
